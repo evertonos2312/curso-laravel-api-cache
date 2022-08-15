@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUpdateCourse;
 use App\Http\Resources\CourseResource;
 use App\Services\CourseService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 
 class CourseController extends Controller
 {
@@ -32,7 +34,7 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreUpdateCourse $request
      * @return CourseResource
      */
     public function store(StoreUpdateCourse $request): CourseResource
@@ -44,34 +46,37 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param string $identify
+     * @return CourseResource
      */
-    public function show($id)
+    public function show(string $identify): CourseResource
     {
-        //
+        $course = $this->courseService->getCourse($identify);
+        return new CourseResource($course);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param StoreUpdateCourse $request
+     * @param string $identify
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateCourse $request, string $identify)
     {
-        //
+        $this->courseService->updateCourse($identify, $request->validated());
+        return response()->json(['message' => 'updated']);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  string  $identify
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy($identify)
     {
-        //
+        $this->courseService->deleteCourse($identify);
+        return response()->json([], 204);
     }
 }
