@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ModuleResource extends JsonResource
@@ -14,6 +15,9 @@ class ModuleResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'identify' => $this->uuid,
+            'name' => $this->name,
+        ];
     }
 }

@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUpdateCourse;
 use App\Http\Requests\StoreUpdateModule;
-use App\Http\Resources\CourseResource;
 use App\Http\Resources\ModuleResource;
 use App\Services\ModuleService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ModuleController extends Controller
@@ -60,7 +57,8 @@ class ModuleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param StoreUpdateCourse $request
+     * @param StoreUpdateModule $request
+     * @param $course
      * @param string $identify
      * @return JsonResponse
      */

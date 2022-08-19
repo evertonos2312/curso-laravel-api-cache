@@ -13,7 +13,7 @@ class StoreUpdateModule extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,10 @@ class StoreUpdateModule extends FormRequest
      */
     public function rules()
     {
+        $uuid = $this->module ?? '';
         return [
-            //
+            'name' => ['required', 'min:3', 'max:255', "unique:modules,name,{$uuid},uuid"],
+            'course' => ['required', 'exists:courses,uuid']
         ];
     }
 }
