@@ -24,6 +24,7 @@ class LessonRepository
     public function createNewLesson(int $moduleId, array $data)
     {
         $data['module_id'] = $moduleId;
+        Cache::forget('courses');
 
         return $this->entity->create($data);
     }
